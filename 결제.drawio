@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-07-14T12:01:22.734Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="0oy9QQ3qjDq7tTtyQfFP" version="24.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2024-07-21T05:52:49.321Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="cywH2lzaRgR6G1-pxb9K" version="24.7.2" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="2074" dy="1140" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="760" dy="450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -30,7 +30,7 @@
             <mxRectangle width="30" height="230" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="C-vyLk0tnHw3VtMMgP7b-8" value="TransactionID (CHAR(20), Primary Key)&#xa;MerchantID (CHAR(20), Foreign Key references Merchant(MerchantID))&#xa;TotalAmount (DECIMAL(10, 2))&#xa;SupplyAmount (DECIMAL(10, 2))&#xa;VAT (DECIMAL(10, 2))&#xa;ServiceCharge (DECIMAL(10, 2))&#xa;TaxExempt (BOOLEAN)&#xa;ApprovalNumber (VARCHAR(30))&#xa;OrderNumber (VARCHAR(30))&#xa;EMVData (TEXT)&#xa;ApprovalDate (CHAR(8)) &#xa;ApprovalTime (CHAR(6)) &#xa;ApprovalTimeMilli1 (CHAR(9)) &#xa;ApprovalTimeMilli2 (CHAR(9)) " style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="C-vyLk0tnHw3VtMMgP7b-6" vertex="1">
+        <mxCell id="C-vyLk0tnHw3VtMMgP7b-8" value="TransactionID (CHAR(20), Primary Key)&#xa;MerchantID (CHAR(20), Foreign Key references Merchant(MerchantID))&#xa;TotalAmount (DECIMAL(10, 2))&#xa;SupplyAmount (DECIMAL(10, 2))&#xa;VAT (DECIMAL(10, 2))&#xa;ServiceCharge (DECIMAL(10, 2))&#xa;TaxExempt (BOOLEAN)&#xa;ApprovalNumber (VARCHAR(30))&#xa;OrderNumber (VARCHAR(30))&#xa;ApprovalDate (CHAR(8)) &#xa;ApprovalTime (CHAR(6)) &#xa;ApproveNumber(CHAR(15))&#xa;RespCode(char(4))&#xa;RespMsg(char(64))&#xa;ApprovalTimeMilli1 (CHAR(9)) &#xa;ApprovalTimeMilli2 (CHAR(9)) " style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" parent="C-vyLk0tnHw3VtMMgP7b-6" vertex="1">
           <mxGeometry x="30" width="420" height="230" as="geometry">
             <mxRectangle width="420" height="230" as="alternateBounds" />
           </mxGeometry>
@@ -64,11 +64,42 @@
             <mxRectangle width="350" height="210" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="scW38HUTE_DoaA1xdUYx-36" value="&lt;div&gt;MerchantID&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;가맹점번호&lt;/div&gt;&lt;div&gt;BusinessNumber&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;사업자번호&lt;/div&gt;&lt;div&gt;ClosedStatus&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;폐업여부&lt;/div&gt;&lt;div&gt;IndustryCode&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;업종코드&lt;/div&gt;&lt;div&gt;PreferredMerchant&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;우대가맹점 여부&lt;/div&gt;&lt;div&gt;Promotion&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;프로모션 여부&lt;/div&gt;&lt;div&gt;MerchantName&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;가맹점 이름&lt;/div&gt;&lt;div&gt;Address&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;주소&lt;/div&gt;&lt;div&gt;RegisteredEmployeeCode&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;등록사원 코드&lt;/div&gt;&lt;div&gt;RegistrationDate&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;등록일자&lt;/div&gt;&lt;div&gt;LastModifiedDate&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;변경일자&lt;/div&gt;&lt;div&gt;ModifiedEmployeeCode&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;변경사원 코드&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="scW38HUTE_DoaA1xdUYx-36" value="&lt;div&gt;MerchantID&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;가맹점번호&lt;/div&gt;&lt;div&gt;BusinessNumber&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;사업자번호&lt;/div&gt;&lt;div&gt;ClosedStatus&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;폐업여부&lt;/div&gt;&lt;div&gt;IndustryCode&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;업종코드&lt;/div&gt;&lt;div&gt;PreferredMerchant&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;우대가맹점 여부&lt;/div&gt;&lt;div&gt;Promotion&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;프로모션 여부&lt;/div&gt;&lt;div&gt;MerchantName&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;가맹점 이름&lt;/div&gt;&lt;div&gt;Address&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;주소&lt;/div&gt;&lt;div&gt;RegisteredEmployeeCode&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;등록사원 코드&lt;/div&gt;&lt;div&gt;RegistrationDate&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;등록일자&lt;/div&gt;&lt;div&gt;LastModifiedDate&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;변경일자&lt;/div&gt;&lt;div&gt;ModifiedEmployeeCode&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;변경사원 코드&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="45" y="340" width="300" height="240" as="geometry" />
         </mxCell>
-        <mxCell id="scW38HUTE_DoaA1xdUYx-37" value="&lt;div&gt;TransactionID&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인ID&lt;/div&gt;&lt;div&gt;MerchantID&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;가맹점번호&lt;/div&gt;&lt;div&gt;TotalAmount&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;총 거래금액&lt;/div&gt;&lt;div&gt;SupplyAmount&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;공급가액&lt;/div&gt;&lt;div&gt;VAT&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;부가세&lt;/div&gt;&lt;div&gt;ServiceCharge&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;봉사료&lt;/div&gt;&lt;div&gt;TaxExempt&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;비과세&lt;/div&gt;&lt;div&gt;ApprovalNumber&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인번호&lt;/div&gt;&lt;div&gt;OrderNumber&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;주문번호&lt;/div&gt;&lt;div&gt;EMVData&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;EMV 데이터&lt;/div&gt;&lt;div&gt;ApprovalDate&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인일자(YYYYMMDD)&lt;/div&gt;&lt;div&gt;ApprovalTime&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인시간(HHMMSS)&lt;/div&gt;&lt;div&gt;ApprovalTimeMilli&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인시간밀리(HHMMSSmmm)&lt;/div&gt;&lt;div&gt;ApprovalTimeMilliAlt&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인시간밀리2(HHMMSSmmm)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="scW38HUTE_DoaA1xdUYx-37" value="&lt;div&gt;TransactionID&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인ID&lt;/div&gt;&lt;div&gt;MerchantID&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;가맹점번호&lt;/div&gt;&lt;div&gt;TotalAmount&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;총 거래금액&lt;/div&gt;&lt;div&gt;SupplyAmount&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;공급가액&lt;/div&gt;&lt;div&gt;VAT&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;부가세&lt;/div&gt;&lt;div&gt;ServiceCharge&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;봉사료&lt;/div&gt;&lt;div&gt;TaxExempt&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;비과세&lt;/div&gt;&lt;div&gt;ApprovalNumber&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인번호&lt;/div&gt;&lt;div&gt;OrderNumber&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;주문번호&lt;/div&gt;&lt;div&gt;ApprovalDate&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인요청일자(YYYYMMDD)&lt;/div&gt;&lt;div&gt;ApprovalTime&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;승인요청시간(HHMMSS)&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;text-align: left; text-wrap: nowrap;&quot;&gt;ApproveNumber 승인번호&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;text-wrap: nowrap;&quot;&gt;Resp_code 응답코드&lt;/span&gt;&lt;/div&gt;&lt;div&gt;ApprovalTimeMilli&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;인입시간(HHMMSSmmm)&lt;/div&gt;&lt;div&gt;ApprovalTimeMilliAlt&lt;span style=&quot;white-space:pre&quot;&gt;&#x9;&lt;/span&gt;응답시간(HHMMSSmmm)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="480" y="380" width="450" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-1" value="resp_cd_info" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="40" width="450" height="310" as="geometry">
+            <mxRectangle x="450" y="120" width="140" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-2" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;" vertex="1" parent="lbavQOTdZ4qAeu3WH392-1">
+          <mxGeometry y="30" width="450" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-3" value="PK" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;fontStyle=1;" vertex="1" parent="lbavQOTdZ4qAeu3WH392-2">
+          <mxGeometry width="30" height="30" as="geometry">
+            <mxRectangle width="30" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-4" value="resp_cd(CHAR(4), Primary Key)" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;fontStyle=5;" vertex="1" parent="lbavQOTdZ4qAeu3WH392-2">
+          <mxGeometry x="30" width="420" height="30" as="geometry">
+            <mxRectangle width="420" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-5" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="lbavQOTdZ4qAeu3WH392-1">
+          <mxGeometry y="60" width="450" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-6" value="FK1" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" vertex="1" parent="lbavQOTdZ4qAeu3WH392-5">
+          <mxGeometry width="30" height="230" as="geometry">
+            <mxRectangle width="30" height="230" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbavQOTdZ4qAeu3WH392-7" value="resp_cd(char(4))&#xa;resp_msg(char(64))" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" vertex="1" parent="lbavQOTdZ4qAeu3WH392-5">
+          <mxGeometry x="30" width="420" height="230" as="geometry">
+            <mxRectangle width="420" height="230" as="alternateBounds" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
