@@ -1,6 +1,7 @@
-package com.example.payments.paymentInfo.Entity;
+package com.example.payments.payment.service;
 
-import com.example.payments.paymentInfo.repository.PaymentsInfoRepository;
+import com.example.payments.payment.entity.PaymentsTransaction;
+import com.example.payments.payment.repository.PaymentsInfoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class PaymentsInfoService {
 
     // 요청정보 저장
     @Transactional
-    public String insertRequest(PaymentsInfo paymentsInfo) {
-        paymentsInfoRepository.save(paymentsInfo);
+    public String insertRequest(PaymentsTransaction paymentsTransaction) {
+        paymentsInfoRepository.save(paymentsTransaction);
         /// 요청정보 검증 롤 수행
         /// 카드번호 유효성 검증, 유효기간 검증, 금액 검증
         /// 오류가 나면 오류 난 시점에서 DB 업데이트
         /// 정상적이면 정상처리 DB 업데이트
-        return paymentsInfo.getOrderNumber();
+        return paymentsTransaction.getOrderNumber();
     }
 
 }

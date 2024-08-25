@@ -1,6 +1,6 @@
-package com.example.payments.paymentInfo.repository;
+package com.example.payments.payment.repository;
 
-import com.example.payments.paymentInfo.Entity.PaymentsInfo;
+import com.example.payments.payment.entity.PaymentsTransaction;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -13,15 +13,15 @@ public class PaymentsInfoRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(PaymentsInfo paymentsInfo) {
-        em.persist(paymentsInfo);
+    public void save(PaymentsTransaction paymentsTransaction) {
+        em.persist(paymentsTransaction);
     }
 
-    public PaymentsInfo fineOne(String id) {
-        return em.find(PaymentsInfo.class, id);
+    public PaymentsTransaction fineOne(String id) {
+        return em.find(PaymentsTransaction.class, id);
     }
 
-    public List<PaymentsInfo> findTransaction(String approvalDate, String cardNumber) {
+    public List<PaymentsTransaction> findTransaction(String approvalDate, String cardNumber) {
         return em.createQuery("select p from PaymentsInfo p where p.approvalDate = :approvalDate" +
                 "and p.cardNumber = :cardNumber")
                 .setParameter("approvalDate", approvalDate)
