@@ -16,25 +16,28 @@ public class PaymentsInfoService {
 
     // 요청정보 저장
     // 요청정보 검증 -> 추후 기능 업데이트
-    // 내가 만들고 싶은것이 카드사 서비스인가 PG서비스인가.
-    // 카드사 서비스라 하면 요청 인입 받고나서 유효성 검증 과정에서 실패하면 저장?
-    // 아니면 일단 저장 후 검증 과정에서 실패시 실패정보 업데이트, 성공하면 성공정보 업데이트 후 전송?
+    // PG 서비스 개발
 
-    /// 일단 가장 간단하게 최소한의 정보만 확인해서 맞으면 승인 내주는 서비스로 만들고 추후 규모를 키우도록 하자.
-
-    // 요청정보 전달 -> 다른 서버로 전달해야 하나 일단 정상 승인 받았다는 가정하에 진행
-    // 요청정보 수신 -> 다른 서버로 전달해야 하나 일단 정상 승인 받았다는 가정하에 진행
-    // 요청정보 업데이트
-
-    // 요청정보 저장
+    /// 승인요청 - 인자값 확정 필요
     @Transactional
-    public String insertRequest(PaymentsTransaction paymentsTransaction) {
-        paymentsInfoRepository.save(paymentsTransaction);
-        /// 요청정보 검증 롤 수행
-        /// 카드번호 유효성 검증, 유효기간 검증, 금액 검증
-        /// 오류가 나면 오류 난 시점에서 DB 업데이트
-        /// 정상적이면 정상처리 DB 업데이트
-        return paymentsTransaction.getOrderNumber();
+    public Object approveRequest(Object object) {
+        // 1. 트랜잭션 초기화
+        PaymentsTransaction transaction = PaymentsTransaction.createTransaction(object);
+        // 1. 요청정보 저장
+        paymentsInfoRepository.save(transaction);
+        // 2. 검증 로직. 아래 내용들은 도메인에서??
+        //   2-1. 유효한 가맹점인지
+        //   2-2. 유효한 카드 정보인지 - 유효기간, 카드 유효성
+        // 3. 승인번호 생성
+        // 4. 승인 결과 업데이트
+        transaction.approve();
+        // 결제성공 정보 반환 - 거래번호, 승인일자, 시간, 금액, 승인번호, 할부개월
+        return transaction;
     }
 
+    /// 취소요청
+    public String cancelRequest(PaymentsTransaction paymentsTransaction) {
+
+        return "1111";
+    }
 }
