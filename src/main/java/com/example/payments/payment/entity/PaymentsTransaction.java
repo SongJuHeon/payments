@@ -5,6 +5,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 @Entity
 @Table(name = "CREDIT_TRANSACTION")
@@ -23,6 +30,8 @@ public class PaymentsTransaction {
     private Long vatAmount;
     private Long serviceAmount;
     private Long taxAmount;
+    private String transactionDate;
+    private String transactionTime;
 
     @Enumerated(EnumType.STRING)
     private IssuerCode issuerCode;
@@ -46,16 +55,35 @@ public class PaymentsTransaction {
     // 생성자 메소드
     public static PaymentsTransaction createTransaction (Object object) {
         PaymentsTransaction transaction = new PaymentsTransaction();
+        transaction.setTotalAmount(1004L);
+        transaction.setTransactionStatus(TransactionStatus.INITIATED);
+        transaction.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
+        transaction.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
+        transaction.setApprovalTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
 
         return transaction;
     }
 
     // 도메인 핵심 로직 작성
     public void approve() {
+        if (this.transactionStatus != TransactionStatus.INITIATED){
+            throw new IllegalStateException("Cannot approve unless initiated");
+        }
+        this.transactionStatus = TransactionStatus.APPROVED;
+        this.setApprovalTime1(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
         // 승인번호 생성
+        this.setApproveNumber(createApproveNumber());
     }
 
     public void cancel() {
 
+    }
+
+    public String createApproveNumber() {
+        Random random = new Random();
+
+        int randomNumber = 10000000 + random.nextInt(90000000);
+
+        return Integer.toString(randomNumber);
     }
 }

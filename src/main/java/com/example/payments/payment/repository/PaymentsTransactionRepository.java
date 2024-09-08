@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class PaymentsInfoRepository {
+public class PaymentsTransactionRepository {
 
     @PersistenceContext
     private EntityManager em;
