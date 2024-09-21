@@ -1,17 +1,17 @@
-package com.example.payments.payment.entity;
+package com.example.payments.payment.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.util.UUID;
 
 @Entity
 @Table(name = "CREDIT_TRANSACTION")
@@ -19,49 +19,66 @@ import java.util.Random;
 @Setter // 추후 세터 제거 예정
 @NoArgsConstructor(access = AccessLevel.PROTECTED) //임시로 설정. 추후 생성자 인자 결정되면 제거
 public class PaymentsTransaction {
-    @Id @GeneratedValue
+    /// 승인, 취소 요청의 모든 트랜잭션은 동일하게 초기화 되어야 한다.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_Id")
-    private String transactionId;
+    private Long transactionId;
 
-    private String merchantId;
-    private String businessNumber;
-    private Long totalAmount;
-    private Long supplyAmount;
-    private Long vatAmount;
-    private Long serviceAmount;
-    private Long taxAmount;
-    private String transactionDate;
-    private String transactionTime;
-
-    @Enumerated(EnumType.STRING)
-    private IssuerCode issuerCode;
-
-    @Enumerated(EnumType.STRING)
-    private PaymentsStatus paymentsStatus;
+    private String terminalId = " ";
+    private String merchantId = " ";
+    private String businessNumber = " ";
+    private String cardNumber = " ";
+    private String expireNumber = " ";
+    private Long totalAmount = 0L;
+    private Long supplyAmount = 0L;
+    private Long vatAmount = 0L;
+    private Long serviceAmount = 0L;
+    private Long taxAmount = 0L;
+    private int installmentsMonths = 0;
+    private String transactionDate = " ";
+    private String transactionTime = " ";
 
     @Enumerated(EnumType.STRING)
-    private TransactionStatus transactionStatus;
+    private IssuerCode issuerCode = IssuerCode.NONE;
 
-    private String approveNumber;
-    private String orderNumber;
+    @Enumerated(EnumType.STRING)
+    private PaymentsStatus paymentsStatus = PaymentsStatus.NONE;
 
-    private String approvalDate;
-    private String approvalTime;
-    private String responseCode;
-    private String responseMessage;
-    private String approvalTime1;
-    private String approvalTime2;
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus = TransactionStatus.NONE;
+
+    private String approveNumber = " ";
+    private String orderNumber = " ";
+
+    private String approvalDate = " ";
+    private String approvalTime = " ";
+    private String responseCode = "9999";
+    private String responseMessage = " ";
+    private String approvalTime1 = " ";
+    private String approvalTime2 = " ";
 
     // 생성자 메소드
-    public static PaymentsTransaction createTransaction (Object object) {
+    public static PaymentsTransaction createTransaction (String cardNumber, String expiredNumber, Long totalAmount
+            , int installmentsMonths, String businessNumber, String terminalId) {
         PaymentsTransaction transaction = new PaymentsTransaction();
-        transaction.setTotalAmount(1004L);
+        transaction.generateTransactionId();
+        transaction.setCardNumber(cardNumber);
+        transaction.setExpireNumber(expiredNumber);
+        transaction.setInstallmentsMonths(installmentsMonths);
+        transaction.setBusinessNumber(businessNumber);
+        transaction.setTerminalId(terminalId);
+        transaction.setTotalAmount(totalAmount);
         transaction.setTransactionStatus(TransactionStatus.INITIATED);
         transaction.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         transaction.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
         transaction.setApprovalTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
 
         return transaction;
+    }
+
+    private String generateTransactionId() {
+        return UUID.randomUUID().toString();
     }
 
     // 도메인 핵심 로직 작성

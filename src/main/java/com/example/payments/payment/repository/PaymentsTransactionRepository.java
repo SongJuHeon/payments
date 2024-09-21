@@ -1,6 +1,6 @@
 package com.example.payments.payment.repository;
 
-import com.example.payments.payment.entity.PaymentsTransaction;
+import com.example.payments.payment.domain.PaymentsTransaction;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -17,7 +17,7 @@ public class PaymentsTransactionRepository {
         em.persist(paymentsTransaction);
     }
 
-    public PaymentsTransaction fineOne(String id) {
+    public PaymentsTransaction findOne(Long id) {
         return em.find(PaymentsTransaction.class, id);
     }
 
