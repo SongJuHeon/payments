@@ -90,6 +90,8 @@ public class PaymentsTransaction {
         this.setApprovalTime1(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
         // 승인번호 생성
         this.setApproveNumber(createApproveNumber());
+        this.setResponseCode("0000");
+        this.setResponseMessage("정상 승인");
     }
 
     public void cancel() {
