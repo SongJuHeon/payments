@@ -2,6 +2,7 @@ package com.example.payments.payment.service;
 
 import com.example.payments.payment.domain.PaymentsTransaction;
 import com.example.payments.payment.domain.TransactionStatus;
+import com.example.payments.payment.exception.InvalidCardException;
 import com.example.payments.payment.repository.PaymentsTransactionRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -41,21 +42,22 @@ public class PaymentsService {
         // 데이터 안정성을 위해 flush 이용하여 트랜잭션 커밋 진행. DB에 insert 되는 단계
         entityManager.flush();
 
-        // 2. 검증 로직. 아래 내용들은 도메인에서??
+        // 2. 검증 로직. 아래 내용들은 도메인에서?? 예외처리로 빼는건 장애 발생등의 상황이고, 값 검증 오류는 정상적인 로직
         //   2-1. 유효한 가맹점인지
         //   2-2. 유효한 카드 정보인지 - 유효기간, 카드 유효성
         try {
-            if(validateCard(transaction.getCardNumber())) {
-                transaction.setTransactionStatus(TransactionStatus.REJECTED);
-                transaction.setResponseMessage("Invalid card number");
-                paymentsTransactionRepository.save(transaction); // 오류 상태와 메시지를 갱신
-                return transaction.getTransactionId();
-            }
+            validateCard(transaction.getCardNumber());
             // 3. 승인상태로 변경
             // 더디 체킹에 의해 변경이 계속 감지되고 있음
             transaction.approve();
 
-        } catch (Exception e) {
+        } catch(InvalidCardException e) {
+            transaction.setTransactionStatus(TransactionStatus.REJECTED);
+            transaction.setResponseMessage("Invalid card number");
+            paymentsTransactionRepository.save(transaction); // 오류 상태와 메시지를 갱신
+            return transaction.getTransactionId();
+
+        } catch (IllegalStateException e) {
             transaction.setTransactionStatus(TransactionStatus.ERROR);
             transaction.setResponseMessage(e.getMessage());
             paymentsTransactionRepository.save(transaction);
@@ -76,7 +78,10 @@ public class PaymentsService {
         return "1111";
     }
 
-    private boolean validateCard(String cardNumber) {
-        return cardNumber != null && cardNumber.length() != 16;
+    /// 여러 검증 규칙이 있으나 간단하게 서버를 구축하는게 목적이므로 간소화 했음
+    private void validateCard(String cardNumber) {
+        if (cardNumber == null || cardNumber.length() != 16 || !cardNumber.chars().allMatch(Character::isDigit)) {
+            throw new InvalidCardException();
+        }
     }
 }
