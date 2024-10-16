@@ -1,5 +1,6 @@
 package com.example.payments.payment.domain;
 
+import com.example.payments.payment.dto.PaymentRequestDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -59,16 +60,15 @@ public class PaymentsTransaction {
     private String approvalTime2 = " ";
 
     // 생성자 메소드
-    public static PaymentsTransaction createTransaction (String cardNumber, String expiredNumber, Long totalAmount
-            , int installmentsMonths, String businessNumber, String terminalId) {
+    public static PaymentsTransaction createTransaction (PaymentRequestDTO paymentRequestDTO) {
         PaymentsTransaction transaction = new PaymentsTransaction();
         transaction.generateTransactionId();
-        transaction.setCardNumber(cardNumber);
-        transaction.setExpireNumber(expiredNumber);
-        transaction.setInstallmentsMonths(installmentsMonths);
-        transaction.setBusinessNumber(businessNumber);
-        transaction.setTerminalId(terminalId);
-        transaction.setTotalAmount(totalAmount);
+        transaction.setCardNumber(paymentRequestDTO.getCardNumber());
+        transaction.setExpireNumber(paymentRequestDTO.getExpiredNumber());
+        transaction.setInstallmentsMonths(paymentRequestDTO.getInstallmentsMonths());
+        transaction.setBusinessNumber(paymentRequestDTO.getBusinessNumber());
+        transaction.setTerminalId(paymentRequestDTO.getTerminalId());
+        transaction.setTotalAmount(paymentRequestDTO.getTotalAmount());
         transaction.setTransactionStatus(TransactionStatus.INITIATED);
         transaction.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         transaction.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));

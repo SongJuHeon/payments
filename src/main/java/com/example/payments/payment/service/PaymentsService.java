@@ -2,6 +2,7 @@ package com.example.payments.payment.service;
 
 import com.example.payments.payment.domain.PaymentsTransaction;
 import com.example.payments.payment.domain.TransactionStatus;
+import com.example.payments.payment.dto.PaymentRequestDTO;
 import com.example.payments.payment.exception.InvalidCardException;
 import com.example.payments.payment.repository.PaymentsTransactionRepository;
 import jakarta.persistence.EntityManager;
@@ -30,12 +31,10 @@ public class PaymentsService {
     @Transactional  ///아래의 로직들을 하나의 트랜젝션으로 묶어줌
     // 메서드가 호출되면, 스프링에서 트랜잭션이 시작되고, 이 메서드 내 모든 작업이 하나의 트랜잭션으로 묶인다.
     // 해당 함수가 끝날 때 DB에 반영
-    public Long approveRequest(String cardNumber, String expiredNumber, Long totalAmount
-            , int installmentsMonths, String businessNumber, String terminalId) {
+    public Long approveRequest(PaymentRequestDTO paymentRequestDTO) {
         // 실제로는 track2 형식으로 받겠지만, 일시적으로 카드번호, 유효기간으로 데이터 받음, 추후 리팩토링
         // 1. 트랜잭션 초기화
-        PaymentsTransaction transaction = PaymentsTransaction.createTransaction(cardNumber, expiredNumber, totalAmount
-                , installmentsMonths, businessNumber, terminalId);
+        PaymentsTransaction transaction = PaymentsTransaction.createTransaction(paymentRequestDTO);
         // 2. 초기 요청정보 저장
         // PaymentsTransaction 객체가 영속성 컨택스트로 들어감. 실제 DB에 insert 쿼리가 전송되지는 않음
         paymentsTransactionRepository.save(transaction);
@@ -67,6 +66,9 @@ public class PaymentsService {
         // 동일 트랜잭션 내에서 진행되므로 insert 쿼리가 실행되지 않음
         // 더티체킹 메커니즘이 활성화된 상태로 트랜잭션 커밋 시 변경이 감지되어 update 쿼리 수행
         paymentsTransactionRepository.save(transaction);
+
+        // 전표 정보를 리턴해주자.
+        // 카드번호,
 
         return transaction.getTransactionId();
     }
