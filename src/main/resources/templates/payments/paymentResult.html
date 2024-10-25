@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader" />
+<h1>결제 결과</h1>
+<div>
+    <p><strong>카드 번호:</strong> <span th:text="${paymentResponseDTO.cardNumber}"></span></p>
+    <p><strong>유효기간:</strong> <span th:text="${paymentResponseDTO.expiredNumber}"></span></p>
+    <p><strong>금액:</strong> <span th:text="${paymentResponseDTO.totalAmount}"></span></p>
+    <p><strong>할부개월수:</strong> <span th:text="${paymentResponseDTO.installmentsMonths}"></span></p>
+    <p><strong>사업자번호:</strong> <span th:text="${paymentResponseDTO.businessNumber}"></span></p>
+    <p><strong>단말기ID:</strong> <span th:text="${paymentResponseDTO.terminalId}"></span></p>
+    <p><strong>승인번호:</strong> <span th:text="${paymentResponseDTO.approveNumber}"></span></p>
+    <p><strong>응답 메시지:</strong> <span th:text="${paymentResponseDTO.responseMessage}"></span></p>
+</div>
+
+<a href="/"><button>홈으로</button></a>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

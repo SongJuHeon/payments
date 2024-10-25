@@ -12,4 +12,5 @@ public class PaymentRequestDTO {
     int installmentsMonths;
     String businessNumber;
     String terminalId;
+    String transactionDate;
 }
