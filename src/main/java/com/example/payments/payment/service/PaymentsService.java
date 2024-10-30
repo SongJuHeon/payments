@@ -72,10 +72,19 @@ public class PaymentsService {
     /// 취소요청
     public String cancelRequest(PaymentsTransaction paymentsTransaction) {
 
+        /// 1. 초기 취소 요청정보 insert
+        /// 2. 거래 유효정보 검증 - 현재 단계는 카드번호만 검증
+        /// 3. 원거래 검색 - 못찾으면 거절, 금액 정보가 다르면 거절, 이미 취소된 거래면 거절
+        /// 4. 원거래 정보를 현재 트랜잭션에 저장.
+        /// 5. 원거래 상태 변경
+        /// 6. 현재 트랜잭션 업데이트
+        /// 7. 응답 전달
+
         return "1111";
     }
 
     /// 여러 검증 규칙이 있으나 간단하게 서버를 구축하는게 목적이므로 간소화 했음
+    /// 2024.10.30 아래 로직 exception이 아니라 비즈니스 로직으로 변경할 예정
     private void validateCard(String cardNumber) {
         if (cardNumber == null || cardNumber.length() != 16 || !cardNumber.chars().allMatch(Character::isDigit)) {
             throw new InvalidCardException();

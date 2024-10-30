@@ -5,6 +5,8 @@
 <div th:replace="fragments/bodyHeader :: bodyHeader" />
 <h1>결제 결과</h1>
 <div>
+    <p><strong>거래일자:</strong> <span th:text="${paymentResponseDTO.approvalDate}"></span></p>
+    <p><strong>거래시간:</strong> <span th:text="${paymentResponseDTO.approvalTime}"></span></p>
     <p><strong>카드 번호:</strong> <span th:text="${paymentResponseDTO.cardNumber}"></span></p>
     <p><strong>유효기간:</strong> <span th:text="${paymentResponseDTO.expiredNumber}"></span></p>
     <p><strong>금액:</strong> <span th:text="${paymentResponseDTO.totalAmount}"></span></p>

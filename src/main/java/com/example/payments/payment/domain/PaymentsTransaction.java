@@ -52,12 +52,16 @@ public class PaymentsTransaction {
     private String approveNumber = " ";
     private String orderNumber = " ";
 
-    private String approvalDate = " ";
-    private String approvalTime = " ";
     private String responseCode = "9999";
     private String responseMessage = " ";
     private String approvalTime1 = " ";
     private String approvalTime2 = " ";
+
+    /// 원거래정보
+    private String originalApprovalDate;
+    private String originalApprovalTime;
+    private String originalApprovalNumber;
+    private String originalTransactionId;
 
     // 생성자 메소드
     public static PaymentsTransaction createTransaction (PaymentRequestDTO paymentRequestDTO) {
@@ -72,7 +76,6 @@ public class PaymentsTransaction {
         transaction.setTransactionStatus(TransactionStatus.INITIATED);
         transaction.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         transaction.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
-        transaction.setApprovalTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
 
         return transaction;
     }

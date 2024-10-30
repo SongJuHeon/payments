@@ -15,6 +15,8 @@ public class PaymentResponseDTO {
     String terminalId;
     String approveNumber;
     String responseMessage;
+    String approvalDate;
+    String approvalTime;
 
     public static PaymentResponseDTO createPaymentResponseDTO(PaymentsTransaction transaction) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
@@ -27,6 +29,8 @@ public class PaymentResponseDTO {
         paymentResponseDTO.setTerminalId(transaction.getTerminalId());
         paymentResponseDTO.setApproveNumber(transaction.getApproveNumber());
         paymentResponseDTO.setResponseMessage(transaction.getResponseMessage());
+        paymentResponseDTO.setApprovalDate(transaction.getTransactionDate());
+        paymentResponseDTO.setApprovalTime(transaction.getTransactionTime());
 
         return paymentResponseDTO;
     }
