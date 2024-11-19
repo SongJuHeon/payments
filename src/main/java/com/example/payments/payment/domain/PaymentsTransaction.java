@@ -1,5 +1,6 @@
 package com.example.payments.payment.domain;
 
+import com.example.payments.payment.dto.CancelRequestDTO;
 import com.example.payments.payment.dto.PaymentRequestDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -18,7 +19,6 @@ import java.util.UUID;
 @Table(name = "CREDIT_TRANSACTION")
 @Getter
 @Setter // 추후 세터 제거 예정
-@NoArgsConstructor(access = AccessLevel.PROTECTED) //임시로 설정. 추후 생성자 인자 결정되면 제거
 public class PaymentsTransaction {
     /// 승인, 취소 요청의 모든 트랜잭션은 동일하게 초기화 되어야 한다.
     @Id
@@ -64,20 +64,36 @@ public class PaymentsTransaction {
     private String originalTransactionId;
 
     // 생성자 메소드
-    public static PaymentsTransaction createTransaction (PaymentRequestDTO paymentRequestDTO) {
-        PaymentsTransaction transaction = new PaymentsTransaction();
-        transaction.generateTransactionId();
-        transaction.setCardNumber(paymentRequestDTO.getCardNumber());
-        transaction.setExpireNumber(paymentRequestDTO.getExpiredNumber());
-        transaction.setInstallmentsMonths(paymentRequestDTO.getInstallmentsMonths());
-        transaction.setBusinessNumber(paymentRequestDTO.getBusinessNumber());
-        transaction.setTerminalId(paymentRequestDTO.getTerminalId());
-        transaction.setTotalAmount(paymentRequestDTO.getTotalAmount());
-        transaction.setTransactionStatus(TransactionStatus.INITIATED);
-        transaction.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
-        transaction.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
+    public PaymentsTransaction (PaymentRequestDTO paymentRequestDTO) {
+        //PaymentsTransaction transaction = new PaymentsTransaction();
+        this.generateTransactionId();
+        this.setCardNumber(paymentRequestDTO.getCardNumber());
+        this.setExpireNumber(paymentRequestDTO.getExpiredNumber());
+        this.setInstallmentsMonths(paymentRequestDTO.getInstallmentsMonths());
+        this.setBusinessNumber(paymentRequestDTO.getBusinessNumber());
+        this.setTerminalId(paymentRequestDTO.getTerminalId());
+        this.setTotalAmount(paymentRequestDTO.getTotalAmount());
+        this.setTransactionStatus(TransactionStatus.INITIATED);
+        this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
+        this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
+    }
 
-        return transaction;
+    public PaymentsTransaction (CancelRequestDTO cancelRequestDTO) {
+        this.generateTransactionId();
+        this.setCardNumber(cancelRequestDTO.getCardNumber());
+        this.setExpireNumber(cancelRequestDTO.getExpiredNumber());
+        this.setInstallmentsMonths(cancelRequestDTO.getInstallmentsMonths());
+        this.setBusinessNumber(cancelRequestDTO.getBusinessNumber());
+        this.setTerminalId(cancelRequestDTO.getTerminalId());
+        this.setTotalAmount(cancelRequestDTO.getTotalAmount());
+        this.setTransactionStatus(TransactionStatus.INITIATED);
+
+        /// 원거래 정보
+        this.setOriginalApprovalDate(cancelRequestDTO.getOriginalApprovalDate());
+        this.setOriginalApprovalDate(cancelRequestDTO.getOriginalApprovalNumber());
+
+        this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
+        this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
     }
 
     private String generateTransactionId() {
