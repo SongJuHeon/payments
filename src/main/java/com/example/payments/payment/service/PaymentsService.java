@@ -48,21 +48,22 @@ public class PaymentsService {
         //   2-1. 유효한 가맹점인지
         //   2-2. 유효한 카드 정보인지 - 유효기간, 카드 유효성
         try {
-            if (validateCard(transaction.getCardNumber())) {
+            // 2. 카드 유효성 검증
+            if (!validateCard(transaction.getCardNumber())) {
                 transaction.setTransactionStatus(TransactionStatus.REJECTED);
                 transaction.setResponseMessage("Invalid card number");
+                paymentsTransactionRepository.save(transaction); // 오류 상태 갱신
+                return PaymentResponseDTO.createPaymentResponseDTO(transaction);
             }
-            else {
-                transaction.approve();
-            }
+
+            transaction.approve();
+            paymentsTransactionRepository.save(transaction);
+
         } catch (IllegalStateException e) {
             transaction.setTransactionStatus(TransactionStatus.ERROR);
             transaction.setResponseMessage(e.getMessage());
-        } finally {
             paymentsTransactionRepository.save(transaction); // 오류 상태와 메시지를 갱신
         }
-
-        paymentsTransactionRepository.save(transaction);
 
         return PaymentResponseDTO.createPaymentResponseDTO(transaction);
     }
@@ -95,11 +96,6 @@ public class PaymentsService {
     /// 여러 검증 규칙이 있으나 간단하게 서버를 구축하는게 목적이므로 간소화 했음
     /// 2024.10.30 아래 로직 exception이 아니라 비즈니스 로직으로 변경할 예정
     private boolean validateCard(String cardNumber) {
-        if (cardNumber == null || cardNumber.length() != 16 || !cardNumber.chars().allMatch(Character::isDigit)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return cardNumber != null && cardNumber.length() == 16 && cardNumber.chars().allMatch(Character::isDigit);
     }
 }
