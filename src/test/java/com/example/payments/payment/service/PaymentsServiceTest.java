@@ -31,6 +31,7 @@ public class PaymentsServiceTest {
     
     @Test
     public void 정상승인() throws Exception {
+        Long transactionId;
         //given: 주어진 상황을 설정하는 부분.
         PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO();
         paymentRequestDTO.setCardNumber("1234567890123456");
@@ -43,7 +44,7 @@ public class PaymentsServiceTest {
         //PaymentsTransaction paymentsTransaction = PaymentsTransaction.createTransaction(cardNumber, expireNumber, totalAmount, installmentsMonths, businessNumber, terminalId);
         
         //when: 테스트할 기능을 호출하고 실행하는 부분.
-        Long transactionId = paymentsService.approveRequest(paymentRequestDTO);
+        transactionId = paymentsService.approveRequest(paymentRequestDTO).getTransactionId();
 
         //then: 기대한 결과를 검증하는 부분. 특정한 결과나 동작이 예상대로 수행되었는지 확인한다.
         PaymentsTransaction getPaymentsTransaction = paymentsTransactionRepository.findOne(transactionId);
@@ -87,11 +88,11 @@ public class PaymentsServiceTest {
         paymentRequestDTO2.setTerminalId(terminalId);
 
         //when
-        Long transactionId1 = paymentsService.approveRequest(paymentRequestDTO1);
+        Long transactionId1 = paymentsService.approveRequest(paymentRequestDTO1).getTransactionId();
 
-        Long transactionId2 = paymentsService.approveRequest(paymentRequestDTO2);
+        Long transactionId2 = paymentsService.approveRequest(paymentRequestDTO2).getTransactionId();
 
-        Long transactionId3 = paymentsService.approveRequest(paymentRequestDTO3);
+        Long transactionId3 = paymentsService.approveRequest(paymentRequestDTO3).getTransactionId();
 
         //then
         PaymentsTransaction getPaymentsTransaction1 = paymentsTransactionRepository.findOne(transactionId1);

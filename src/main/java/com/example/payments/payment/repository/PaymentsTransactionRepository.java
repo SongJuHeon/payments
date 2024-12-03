@@ -3,6 +3,7 @@ package com.example.payments.payment.repository;
 import com.example.payments.payment.domain.PaymentsTransaction;
 import com.example.payments.payment.domain.QPaymentsTransaction;
 import com.example.payments.payment.dto.CancelRequestDTO;
+import com.example.payments.payment.dto.PaymentResponseDTO;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -35,11 +36,19 @@ public class PaymentsTransactionRepository {
                 .fetchOne(); // 조건에 맞는 단일 결과 반환
     }
 
-    public List<PaymentsTransaction> findTransaction(String approvalDate, String cardNumber) {
-        return em.createQuery("select p from PaymentsInfo p where p.approvalDate = :approvalDate" +
-                "and p.cardNumber = :cardNumber")
-                .setParameter("approvalDate", approvalDate)
-                .setParameter("cardNumber", cardNumber)
+    public List<PaymentsTransaction> findTransaction(PaymentResponseDTO paymentResponseDTO) {
+        return em.createQuery("select p from paymentsTransaction p where p.approvalDate = :approvalDate" +
+                "and p.cardNumber = :cardNumber"
+                + "and p.approveNumber = :approveNumber"
+                + "and p.businessNumber = :businessNumber"
+                + "and p.totalAmount = :totalAmount"
+                + "and p.installmentsMonths = :installmentsMonths")
+                .setParameter("approvalDate", paymentResponseDTO.getApprovalDate())
+                .setParameter("cardNumber", paymentResponseDTO.getCardNumber())
+                .setParameter("approveNumber", paymentResponseDTO.getApproveNumber())
+                .setParameter("businessNumber", paymentResponseDTO.getBusinessNumber())
+                .setParameter("totalAmount", paymentResponseDTO.getTotalAmount())
+                .setParameter("installmentsMonths", paymentResponseDTO.getInstallmentsMonths())
                 .getResultList();
     }
 
@@ -52,6 +61,6 @@ public class PaymentsTransactionRepository {
                 .and(paymentsTransaction.totalAmount.eq(cancelRequestDTO.getTotalAmount()))
                 .and(paymentsTransaction.installmentsMonths.eq(cancelRequestDTO.getInstallmentsMonths()));
 
-        return (PaymentsTransaction) queryFactory.selectFrom(paymentsTransaction).where(booleanExpression).fetch();
+        return queryFactory.selectFrom(paymentsTransaction).where(booleanExpression).fetchOne();
     }
 }

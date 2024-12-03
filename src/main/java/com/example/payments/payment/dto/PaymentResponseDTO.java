@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PaymentResponseDTO {
+    Long transactionId;
     String cardNumber;
     String expiredNumber;
     Long totalAmount;
@@ -21,6 +22,7 @@ public class PaymentResponseDTO {
     public static PaymentResponseDTO createPaymentResponseDTO(PaymentsTransaction transaction) {
         PaymentResponseDTO paymentResponseDTO = new PaymentResponseDTO();
 
+        paymentResponseDTO.setTransactionId(transaction.getTransactionId());
         paymentResponseDTO.setCardNumber(transaction.getCardNumber());
         paymentResponseDTO.setExpiredNumber(transaction.getExpireNumber());
         paymentResponseDTO.setTotalAmount(transaction.getTotalAmount());

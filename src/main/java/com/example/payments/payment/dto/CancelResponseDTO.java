@@ -15,6 +15,7 @@ public class CancelResponseDTO {
     String terminalId;
     String approveNumber;
     String responseMessage;
+    Long originalTransactionId;
 
     public static CancelResponseDTO createCancelResponseDTO(PaymentsTransaction transaction) {
         CancelResponseDTO cancelResponseDTO = new CancelResponseDTO();
@@ -27,6 +28,7 @@ public class CancelResponseDTO {
         cancelResponseDTO.setTerminalId(transaction.getTerminalId());
         cancelResponseDTO.setApproveNumber(transaction.getApproveNumber());
         cancelResponseDTO.setResponseMessage(transaction.getResponseMessage());
+        cancelResponseDTO.setOriginalTransactionId(transaction.getTransactionId());
 
         return cancelResponseDTO;
     }
