@@ -7,19 +7,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CancelResponseDTO {
-    String cardNumber;
-    String expiredNumber;
-    Long totalAmount;
-    int installmentsMonths;
-    String businessNumber;
-    String terminalId;
-    String approveNumber;
-    String responseMessage;
-    Long originalTransactionId;
+    String transactionDate = " ";
+    String transactionTime = " ";
+    String cardNumber = " ";
+    String expiredNumber = " ";
+    Long totalAmount = 0L;
+    int installmentsMonths = 0;
+    String businessNumber = " ";
+    String terminalId = " ";
+    String approveNumber = " ";
+    String responseMessage = " ";
+    Long originalTransactionId = 0L;
 
     public static CancelResponseDTO createCancelResponseDTO(PaymentsTransaction transaction) {
         CancelResponseDTO cancelResponseDTO = new CancelResponseDTO();
 
+        cancelResponseDTO.setTransactionDate(transaction.getTransactionDate());
+        cancelResponseDTO.setTransactionTime(transaction.getTransactionTime());
         cancelResponseDTO.setCardNumber(transaction.getCardNumber());
         cancelResponseDTO.setExpiredNumber(transaction.getExpireNumber());
         cancelResponseDTO.setTotalAmount(transaction.getTotalAmount());

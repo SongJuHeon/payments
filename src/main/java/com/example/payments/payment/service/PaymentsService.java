@@ -70,6 +70,7 @@ public class PaymentsService {
     //함수가 종료되면 커밋이 되어 Insert 발생 - 중간에 flush를 해줬기 때문에 더티체킹에 의해 Update가 실행됨
 
     /// 취소요청
+    @Transactional
     public CancelResponseDTO cancelRequest(CancelRequestDTO cancelRequestDTO) {
 
         /// 1. 초기 취소 요청정보 insert
@@ -84,11 +85,39 @@ public class PaymentsService {
             return CancelResponseDTO.createCancelResponseDTO(paymentsTransaction);
         }
         /// 3. 원거래 검색 - 못찾으면 거절, 금액 정보가 다르면 거절, 이미 취소된 거래면 거절
+        PaymentsTransaction originalPayments = paymentsTransactionRepository.findTransaction(cancelRequestDTO);
+
+        if (originalPayments == null) {
+            paymentsTransaction.setTransactionStatus(TransactionStatus.REJECTED);
+            paymentsTransaction.setResponseMessage("Original transaction not found");
+
+            return CancelResponseDTO.createCancelResponseDTO(paymentsTransaction);
+        }
+
+        if (originalPayments.getTotalAmount().compareTo(cancelRequestDTO.getTotalAmount()) != 0) {
+            paymentsTransaction.setTransactionStatus(TransactionStatus.REJECTED);
+            paymentsTransaction.setResponseMessage("Mismatch in transaction amount");
+
+            return CancelResponseDTO.createCancelResponseDTO(paymentsTransaction);
+        }
+
+        if (originalPayments.getTransactionStatus() == TransactionStatus.CANCELLED) {
+            paymentsTransaction.setTransactionStatus(TransactionStatus.REJECTED);
+            paymentsTransaction.setResponseMessage("Transaction already canceled");
+
+            return CancelResponseDTO.createCancelResponseDTO(paymentsTransaction);
+        }
         /// querydsl로 일단 어찌어찌 해서 적용하고 후에 강의보고 공부하는걸로 하자
-        /// 4. 원거래 정보를 현재 트랜잭션에 저장.
-        /// 5. 원거래 상태 변경
+
+        // /// 5. 원거래 상태 변경 및 저장
+        originalPayments.setTransactionStatus(TransactionStatus.CANCELLED);
+        paymentsTransactionRepository.updateTransactionStatus(
+                originalPayments.getTransactionId(), TransactionStatus.CANCELLED);
+
         /// 6. 현재 트랜잭션 업데이트
         /// 7. 응답 전달
+        paymentsTransaction.approve();
+        paymentsTransactionRepository.save(paymentsTransaction);
 
         return CancelResponseDTO.createCancelResponseDTO(paymentsTransaction);
     }

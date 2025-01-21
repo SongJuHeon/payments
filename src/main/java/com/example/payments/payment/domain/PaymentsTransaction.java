@@ -25,7 +25,7 @@ public class PaymentsTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_Id")
     private Long transactionId;
-
+    private String messageType = " ";
     private String terminalId = " ";
     private String merchantId = " ";
     private String businessNumber = " ";
@@ -58,15 +58,17 @@ public class PaymentsTransaction {
     private String approvalTime2 = " ";
 
     /// 원거래정보
-    private String originalApprovalDate;
-    private String originalApprovalTime;
-    private String originalApprovalNumber;
-    private String originalTransactionId;
+    private String originalApprovalDate = " ";
+    private String originalApprovalTime = " ";
+    private String originalApprovalNumber = " ";
+    private String originalTransactionId = " ";
 
     // 생성자 메소드
+    public PaymentsTransaction() {}
     public PaymentsTransaction (PaymentRequestDTO paymentRequestDTO) {
         //PaymentsTransaction transaction = new PaymentsTransaction();
         this.generateTransactionId();
+        this.messageType = "0200";
         this.setCardNumber(paymentRequestDTO.getCardNumber());
         this.setExpireNumber(paymentRequestDTO.getExpiredNumber());
         this.setInstallmentsMonths(paymentRequestDTO.getInstallmentsMonths());
@@ -80,6 +82,7 @@ public class PaymentsTransaction {
 
     public PaymentsTransaction (CancelRequestDTO cancelRequestDTO) {
         this.generateTransactionId();
+        this.messageType = "0210";
         this.setCardNumber(cancelRequestDTO.getCardNumber());
         this.setExpireNumber(cancelRequestDTO.getExpiredNumber());
         this.setInstallmentsMonths(cancelRequestDTO.getInstallmentsMonths());
@@ -90,7 +93,7 @@ public class PaymentsTransaction {
 
         /// 원거래 정보
         this.setOriginalApprovalDate(cancelRequestDTO.getOriginalApprovalDate());
-        this.setOriginalApprovalDate(cancelRequestDTO.getOriginalApprovalNumber());
+        this.setOriginalApprovalNumber(cancelRequestDTO.getOriginalApprovalNumber());
 
         this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
@@ -108,9 +111,14 @@ public class PaymentsTransaction {
         this.transactionStatus = TransactionStatus.APPROVED;
         this.setApprovalTime1(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
         // 승인번호 생성
-        this.setApproveNumber(createApproveNumber());
+        if (this.messageType == "0200") {
+            this.setApproveNumber(createApproveNumber());
+        }
+        else {
+            this.setApproveNumber(this.getOriginalApprovalNumber());
+        }
         this.setResponseCode("0000");
-        this.setResponseMessage("정상 승인");
+        this.setResponseMessage("정상 처리");
     }
 
     public void cancel() {

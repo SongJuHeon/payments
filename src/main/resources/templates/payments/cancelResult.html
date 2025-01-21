@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader" />
+<h1>취소 결과</h1>
+<div>
+    <p><strong>취소요청일자:</strong> <span th:text="${cancelResponseDTO.transactionDate}"></span></p>
+    <p><strong>취소요청시간:</strong> <span th:text="${cancelResponseDTO.transactionTime}"></span></p>
+    <p><strong>카드 번호:</strong> <span th:text="${cancelResponseDTO.cardNumber}"></span></p>
+    <p><strong>유효기간:</strong> <span th:text="${cancelResponseDTO.expiredNumber}"></span></p>
+    <p><strong>금액:</strong> <span th:text="${cancelResponseDTO.totalAmount}"></span></p>
+    <p><strong>할부개월수:</strong> <span th:text="${cancelResponseDTO.installmentsMonths}"></span></p>
+    <p><strong>사업자번호:</strong> <span th:text="${cancelResponseDTO.businessNumber}"></span></p>
+    <p><strong>단말기ID:</strong> <span th:text="${cancelResponseDTO.terminalId}"></span></p>
+    <p><strong>승인번호:</strong> <span th:text="${cancelResponseDTO.approveNumber}"></span></p>
+    <p><strong>응답 메시지:</strong> <span th:text="${cancelResponseDTO.responseMessage}"></span></p>
+</div>
+
+<a href="/"><button>홈으로</button></a>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

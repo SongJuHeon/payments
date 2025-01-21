@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader" />
+<h1>결제 정보 입력</h1>
+<form th:action="@{/payments/cancel}" th:object="${cancelRequestDTO}" method="post">
+    <label th:for="originalApprovalDate">원거래일자:</label>
+    <input type="text" th:field="*{originalApprovalDate}" required/><br/>
+
+    <label th:for="cardNumber">카드번호:</label>
+    <input type="text" th:field="*{cardNumber}" required/><br/>
+
+    <label th:for="expiredNumber">유효기간 (MM/YY):</label>
+    <input type="text" th:field="*{expiredNumber}" required/><br/>
+
+    <label th:for="totalAmount">금액:</label>
+    <input type="number" th:field="*{totalAmount}" required/><br/>
+
+    <label th:for="installmentsMonths">할부개월수:</label>
+    <input type="number" th:field="*{installmentsMonths}" required/><br/>
+
+    <label th:for="originalApprovalNumber">승인번호:</label>
+    <input type="text" th:field="*{originalApprovalNumber}" required/><br/>
+
+    <!--
+    <label th:for="transactionDate">거래일자 (YYYY-MM-DD):</label>
+    <input type="date" th:field="*{transactionDate}" required/><br/>
+    -->
+    <button type="submit">취소하기</button>
+</form>
+
+<a href="/"><button>홈으로</button></a>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>

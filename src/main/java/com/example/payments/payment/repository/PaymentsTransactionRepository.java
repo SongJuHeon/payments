@@ -2,12 +2,14 @@ package com.example.payments.payment.repository;
 
 import com.example.payments.payment.domain.PaymentsTransaction;
 import com.example.payments.payment.domain.QPaymentsTransaction;
+import com.example.payments.payment.domain.TransactionStatus;
 import com.example.payments.payment.dto.CancelRequestDTO;
 import com.example.payments.payment.dto.PaymentResponseDTO;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,6 +36,16 @@ public class PaymentsTransactionRepository {
         return queryFactory.selectFrom(paymentsTransaction)
                 .where(paymentsTransaction.transactionId.eq(id))
                 .fetchOne(); // 조건에 맞는 단일 결과 반환
+    }
+
+    // 거래 상태 업데이트 메서드
+    @Transactional
+    public void updateTransactionStatus(Long id, TransactionStatus status) {
+        // JPQL 쿼리를 사용하여 거래 상태 업데이트
+        em.createQuery("UPDATE PaymentsTransaction p SET p.transactionStatus = :status WHERE p.id = :id")
+                .setParameter("status", status)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     public List<PaymentsTransaction> findTransaction(PaymentResponseDTO paymentResponseDTO) {
