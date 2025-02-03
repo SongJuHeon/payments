@@ -1,12 +1,11 @@
 package com.example.payments.payment.domain;
 
+import com.example.payments.payment.data.CodeData.ResponseCode;
 import com.example.payments.payment.dto.CancelRequestDTO;
 import com.example.payments.payment.dto.PaymentRequestDTO;
+import com.example.payments.payment.dto.PaymentResponseDTO;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,12 +18,11 @@ import java.util.UUID;
 @Table(name = "CREDIT_TRANSACTION")
 @Getter
 @Setter // 추후 세터 제거 예정
+@Builder
 public class PaymentsTransaction {
     /// 승인, 취소 요청의 모든 트랜잭션은 동일하게 초기화 되어야 한다.
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_Id")
-    private Long transactionId;
+    private String transactionId = " ";
     private String messageType = " ";
     private String terminalId = " ";
     private String merchantId = " ";
@@ -64,8 +62,8 @@ public class PaymentsTransaction {
     private String originalTransactionId = " ";
 
     // 생성자 메소드
-    public PaymentsTransaction() {}
-    public PaymentsTransaction (PaymentRequestDTO paymentRequestDTO) {
+//    public PaymentsTransaction() {}
+/*    public PaymentsTransaction (PaymentRequestDTO paymentRequestDTO) {
         //PaymentsTransaction transaction = new PaymentsTransaction();
         this.generateTransactionId();
         this.messageType = "0200";
@@ -78,9 +76,9 @@ public class PaymentsTransaction {
         this.setTransactionStatus(TransactionStatus.INITIATED);
         this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
-    }
+    }*/
 
-    public PaymentsTransaction (CancelRequestDTO cancelRequestDTO) {
+/*    public PaymentsTransaction (CancelRequestDTO cancelRequestDTO) {
         this.generateTransactionId();
         this.messageType = "0210";
         this.setCardNumber(cancelRequestDTO.getCardNumber());
@@ -97,7 +95,7 @@ public class PaymentsTransaction {
 
         this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
-    }
+    }*/
 
     private String generateTransactionId() {
         return UUID.randomUUID().toString();
@@ -117,8 +115,8 @@ public class PaymentsTransaction {
         else {
             this.setApproveNumber(this.getOriginalApprovalNumber());
         }
-        this.setResponseCode("0000");
-        this.setResponseMessage("정상 처리");
+        this.setResponseCode(ResponseCode.SUCCESS.Success.code);
+        this.setResponseMessage(ResponseCode.SUCCESS.Success.message);
     }
 
     public void cancel() {

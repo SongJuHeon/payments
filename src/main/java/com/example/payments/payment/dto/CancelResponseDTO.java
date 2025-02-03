@@ -1,12 +1,15 @@
 package com.example.payments.payment.dto;
 
 import com.example.payments.payment.domain.PaymentsTransaction;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class CancelResponseDTO {
+    String transactionId;
     String transactionDate = " ";
     String transactionTime = " ";
     String cardNumber = " ";
@@ -15,25 +18,9 @@ public class CancelResponseDTO {
     int installmentsMonths = 0;
     String businessNumber = " ";
     String terminalId = " ";
+    String approveDate = " ";
     String approveNumber = " ";
+    String responseCode = " ";
     String responseMessage = " ";
     Long originalTransactionId = 0L;
-
-    public static CancelResponseDTO createCancelResponseDTO(PaymentsTransaction transaction) {
-        CancelResponseDTO cancelResponseDTO = new CancelResponseDTO();
-
-        cancelResponseDTO.setTransactionDate(transaction.getTransactionDate());
-        cancelResponseDTO.setTransactionTime(transaction.getTransactionTime());
-        cancelResponseDTO.setCardNumber(transaction.getCardNumber());
-        cancelResponseDTO.setExpiredNumber(transaction.getExpireNumber());
-        cancelResponseDTO.setTotalAmount(transaction.getTotalAmount());
-        cancelResponseDTO.setInstallmentsMonths(transaction.getInstallmentsMonths());
-        cancelResponseDTO.setBusinessNumber(transaction.getBusinessNumber());
-        cancelResponseDTO.setTerminalId(transaction.getTerminalId());
-        cancelResponseDTO.setApproveNumber(transaction.getApproveNumber());
-        cancelResponseDTO.setResponseMessage(transaction.getResponseMessage());
-        cancelResponseDTO.setOriginalTransactionId(transaction.getTransactionId());
-
-        return cancelResponseDTO;
-    }
 }
