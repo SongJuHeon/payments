@@ -18,7 +18,6 @@ import java.util.UUID;
 @Table(name = "CREDIT_TRANSACTION")
 @Getter
 @Setter // 추후 세터 제거 예정
-@Builder
 public class PaymentsTransaction {
     /// 승인, 취소 요청의 모든 트랜잭션은 동일하게 초기화 되어야 한다.
     @Id
@@ -52,8 +51,8 @@ public class PaymentsTransaction {
 
     private String responseCode = "9999";
     private String responseMessage = " ";
-    private String approvalTime1 = " ";
-    private String approvalTime2 = " ";
+    private String approvalDate= " ";
+    private String approvalTime = " ";
 
     /// 원거래정보
     private String originalApprovalDate = " ";
@@ -62,10 +61,11 @@ public class PaymentsTransaction {
     private String originalTransactionId = " ";
 
     // 생성자 메소드
-//    public PaymentsTransaction() {}
-/*    public PaymentsTransaction (PaymentRequestDTO paymentRequestDTO) {
-        //PaymentsTransaction transaction = new PaymentsTransaction();
-        this.generateTransactionId();
+    public PaymentsTransaction() {}
+
+    public PaymentsTransaction (PaymentRequestDTO paymentRequestDTO) {
+        PaymentsTransaction transaction = new PaymentsTransaction();
+        this.transactionId = generateTransactionId();
         this.messageType = "0200";
         this.setCardNumber(paymentRequestDTO.getCardNumber());
         this.setExpireNumber(paymentRequestDTO.getExpiredNumber());
@@ -76,10 +76,10 @@ public class PaymentsTransaction {
         this.setTransactionStatus(TransactionStatus.INITIATED);
         this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
-    }*/
+    }
 
-/*    public PaymentsTransaction (CancelRequestDTO cancelRequestDTO) {
-        this.generateTransactionId();
+    public PaymentsTransaction (CancelRequestDTO cancelRequestDTO) {
+        this.transactionId = generateTransactionId();
         this.messageType = "0210";
         this.setCardNumber(cancelRequestDTO.getCardNumber());
         this.setExpireNumber(cancelRequestDTO.getExpiredNumber());
@@ -95,7 +95,7 @@ public class PaymentsTransaction {
 
         this.setTransactionDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")));
         this.setTransactionTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
-    }*/
+    }
 
     private String generateTransactionId() {
         return UUID.randomUUID().toString();
@@ -107,7 +107,9 @@ public class PaymentsTransaction {
             throw new IllegalStateException("Cannot approve unless initiated");
         }
         this.transactionStatus = TransactionStatus.APPROVED;
-        this.setApprovalTime1(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
+        this.setApprovalDate(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        this.setApprovalTime(LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmss")));
+
         // 승인번호 생성
         if (this.messageType == "0200") {
             this.setApproveNumber(createApproveNumber());
